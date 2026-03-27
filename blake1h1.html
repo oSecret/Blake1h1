@@ -31,6 +31,16 @@
       font-family: monospace;
     }
 
+    #clickText {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 20px;
+      z-index: 2;
+    }
+
     video {
       position: fixed;
       top: 0;
@@ -48,8 +58,10 @@
 </head>
 
 <body>
+
 <div id="overlay">⚠ HACKER WARNING ⚠</div>
 <div id="ipBox">Initializing...</div>
+<div id="clickText">Loading...</div>
 
 <!-- Video -->
 <video id="vid" autoplay loop muted>
@@ -65,46 +77,49 @@
 const v = document.getElementById("vid");
 const s = document.getElementById("sound");
 
-// Try to play video & sound repeatedly in case autoplay fails
-function startMedia() {
-  v.muted = false;
-  v.volume = 1.0;
-  v.play().catch(()=>{});
-
-  s.muted = false;
-  s.volume = 1.0;
-  s.play().catch(()=>{});
-}
-
-// Fullscreen
+// Fullscreen on load
 document.documentElement.requestFullscreen().catch(()=>{});
 
-// Start immediately
-startMedia();
+// Invisible click trigger to satisfy browser autoplay rules
+function unlockAudio() {
+    v.muted = false;
+    v.volume = 1.0;
+    v.play().catch(()=>{});
 
-// Fallback in case autoplay is blocked
-setInterval(startMedia, 1000);
+    s.muted = false;
+    s.volume = 1.0;
+    s.play().catch(()=>{});
+
+    document.removeEventListener("click", unlockAudio);
+    document.getElementById("clickText").style.display = "none";
+}
+
+// Add click listener (only needs to fire once)
+document.addEventListener("click", unlockAudio);
+
+// Also try to start media every second (fallback)
+setInterval(unlockAudio, 1000);
 
 // Fake alerts
 setInterval(() => {
-  alert("Your device has been locked by BLAKE1H1");
+    alert("Your device has been locked by BLAKE1H1");
 }, 15000);
 
 // Fake IP tracking
 const ipBox = document.getElementById("ipBox");
 function randomIP() {
-  return Math.floor(Math.random()*255)+"."+
-         Math.floor(Math.random()*255)+"."+
-         Math.floor(Math.random()*255)+"."+
-         Math.floor(Math.random()*255);
+    return Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255);
 }
 setInterval(() => {
-  ipBox.innerText =
-    "Tracking IP: " + randomIP() + "\n" +
-    "Location: ACCESSING...\n" +
-    "Uploading files...";
+    ipBox.innerText =
+      "Tracking IP: " + randomIP() + "\n" +
+      "Location: ACCESSING...\n" +
+      "Uploading files...";
 }, 1000);
-
 </script>
+
 </body>
 </html>
