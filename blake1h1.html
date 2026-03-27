@@ -23,6 +23,16 @@
   z-index: 2;
 }
 
+#clickText {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  z-index: 2;
+}
+
 iframe {
   position: fixed;
   top: 0;
@@ -46,7 +56,7 @@ iframe {
 <div id="overlay">⚠ HACKER WARNING ⚠</div>
 
 <iframe id="yt"
-  src=""
+  src="https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&mute=1&controls=0&loop=1&playlist=z_N0SO4s6iA"
   allow="autoplay; fullscreen">
 </iframe>
 
@@ -57,19 +67,22 @@ function startPrank() {
   if (started) return;
   started = true;
 
-  // Go fullscreen
+  // Fullscreen
   document.documentElement.requestFullscreen().catch(()=>{});
 
-  // Load & autoplay YouTube video
-  document.getElementById("yt").src =
-    "https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&controls=0&loop=1&playlist=z_N0SO4s6iA";
+  // Remove click text
+  document.getElementById("clickText").style.display = "none";
 
-  // Fake alert loop
+  // Reload video WITH sound
+  document.getElementById("yt").src =
+    "https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&mute=0&controls=0&loop=1&playlist=z_N0SO4s6iA";
+
+  // Fake alerts
   setInterval(() => {
     alert("Your device has been locked by BLAKE1H1");
   }, 15000);
 
-  // Console spam (just for fun)
+  // Console spam
   setInterval(() => {
     console.log("Tracking user...");
   }, 1000);
