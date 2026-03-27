@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>HACKER WARNING</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      color: red;
+      font-family: Arial;
+    }
+
+```
+#overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 35px;
+  font-weight: bold;
+  animation: blink 1s infinite;
+  z-index: 2;
+}
+
+iframe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  border: none;
+  z-index: 0;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+```
+
+  </style>
+</head>
+
+<body onclick="startPrank()">
+
+<div id="overlay">⚠ HACKER WARNING ⚠</div>
+
+<iframe id="yt"
+  src=""
+  allow="autoplay; fullscreen">
+</iframe>
+
+<script>
+let started = false;
+
+function startPrank() {
+  if (started) return;
+  started = true;
+
+  // Go fullscreen
+  document.documentElement.requestFullscreen().catch(()=>{});
+
+  // Load & autoplay YouTube video
+  document.getElementById("yt").src =
+    "https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&controls=0&loop=1&playlist=z_N0SO4s6iA";
+
+  // Fake alert loop
+  setInterval(() => {
+    alert("Your device has been locked by BLAKE1H1");
+  }, 15000);
+
+  // Console spam (just for fun)
+  setInterval(() => {
+    console.log("Tracking user...");
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
