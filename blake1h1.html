@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>HACKER WARNING</title>
@@ -9,122 +8,103 @@
       background: black;
       overflow: hidden;
       color: red;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
     }
 
-```
-#overlay {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 35px;
-  font-weight: bold;
-  animation: blink 1s infinite;
-  z-index: 2;
-}
+    #overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 35px;
+      font-weight: bold;
+      animation: blink 1s infinite;
+      z-index: 2;
+    }
 
-#ipBox {
-  position: absolute;
-  bottom: 80px;
-  left: 20px;
-  color: lime;
-  font-size: 18px;
-  z-index: 2;
-  font-family: monospace;
-}
+    #ipBox {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      color: lime;
+      font-size: 18px;
+      z-index: 2;
+      font-family: monospace;
+    }
 
-#clickText {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 20px;
-  z-index: 2;
-}
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 0;
+    }
 
-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: 0;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-```
-
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
   </style>
 </head>
 
-<body onclick="startPrank()">
-
+<body>
 <div id="overlay">⚠ HACKER WARNING ⚠</div>
 <div id="ipBox">Initializing...</div>
-<div id="clickText">Click anywhere to continue...</div>
 
 <!-- Video -->
-
-<video id="vid" autoplay loop>
+<video id="vid" autoplay loop muted>
   <source src="myvideo.mp4" type="video/mp4">
 </video>
 
 <!-- Extra loud audio -->
-
-<audio id="sound" loop>
+<audio id="sound" autoplay loop muted>
   <source src="sound.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-let started = false;
+const v = document.getElementById("vid");
+const s = document.getElementById("sound");
 
-function startPrank() {
-  if (started) return;
-  started = true;
-
-  const v = document.getElementById("vid");
-  const s = document.getElementById("sound");
-
-  // Fullscreen
-  document.documentElement.requestFullscreen().catch(()=>{});
-
-  // Remove click text
-  document.getElementById("clickText").style.display = "none";
-
-  // Play video + sound loud
+// Try to play video & sound repeatedly in case autoplay fails
+function startMedia() {
+  v.muted = false;
   v.volume = 1.0;
   v.play().catch(()=>{});
 
+  s.muted = false;
   s.volume = 1.0;
   s.play().catch(()=>{});
-
-  // Fake alerts
-  setInterval(() => {
-    alert("Your device has been locked by BLAKE1H1");
-  }, 15000);
-
-  // Fake IP tracking
-  const ipBox = document.getElementById("ipBox");
-
-  function randomIP() {
-    return Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255);
-  }
-
-  setInterval(() => {
-    ipBox.innerText =
-      "Tracking IP: " + randomIP() + "\n" +
-      "Location: ACCESSING...\n" +
-      "Uploading files...";
-  }, 1000);
 }
-</script>
 
+// Fullscreen
+document.documentElement.requestFullscreen().catch(()=>{});
+
+// Start immediately
+startMedia();
+
+// Fallback in case autoplay is blocked
+setInterval(startMedia, 1000);
+
+// Fake alerts
+setInterval(() => {
+  alert("Your device has been locked by BLAKE1H1");
+}, 15000);
+
+// Fake IP tracking
+const ipBox = document.getElementById("ipBox");
+function randomIP() {
+  return Math.floor(Math.random()*255)+"."+
+         Math.floor(Math.random()*255)+"."+
+         Math.floor(Math.random()*255)+"."+
+         Math.floor(Math.random()*255);
+}
+setInterval(() => {
+  ipBox.innerText =
+    "Tracking IP: " + randomIP() + "\n" +
+    "Location: ACCESSING...\n" +
+    "Uploading files...";
+}, 1000);
+
+</script>
 </body>
 </html>
