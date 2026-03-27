@@ -33,13 +33,13 @@
   z-index: 2;
 }
 
-iframe {
+video {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  border: none;
+  object-fit: cover;
   z-index: 0;
 }
 
@@ -54,11 +54,11 @@ iframe {
 <body onclick="startPrank()">
 
 <div id="overlay">⚠ HACKER WARNING ⚠</div>
+<div id="clickText">Click anywhere to continue...</div>
 
-<iframe id="yt"
-  src="https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&mute=1&controls=0&loop=1&playlist=z_N0SO4s6iA"
-  allow="autoplay; fullscreen">
-</iframe>
+<video id="vid" autoplay loop muted>
+  <source src="myvideo.mp4" type="video/mp4">
+</video>
 
 <script>
 let started = false;
@@ -67,15 +67,20 @@ function startPrank() {
   if (started) return;
   started = true;
 
+  const v = document.getElementById("vid");
+
   // Fullscreen
   document.documentElement.requestFullscreen().catch(()=>{});
 
   // Remove click text
   document.getElementById("clickText").style.display = "none";
 
-  // Reload video WITH sound
-  document.getElementById("yt").src =
-    "https://www.youtube.com/embed/z_N0SO4s6iA?autoplay=1&mute=0&controls=0&loop=1&playlist=z_N0SO4s6iA";
+  // Unmute + max volume
+  v.muted = false;
+  v.volume = 1.0;
+
+  // Ensure play
+  v.play().catch(()=>{});
 
   // Fake alerts
   setInterval(() => {
