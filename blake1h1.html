@@ -23,6 +23,16 @@
   z-index: 2;
 }
 
+#ipBox {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  color: lime;
+  font-size: 18px;
+  z-index: 2;
+  font-family: monospace;
+}
+
 #clickText {
   position: absolute;
   bottom: 20px;
@@ -54,11 +64,20 @@ video {
 <body onclick="startPrank()">
 
 <div id="overlay">⚠ HACKER WARNING ⚠</div>
+<div id="ipBox">Initializing...</div>
 <div id="clickText">Click anywhere to continue...</div>
 
-<video id="vid" autoplay loop muted>
+<!-- Video -->
+
+<video id="vid" autoplay loop>
   <source src="myvideo.mp4" type="video/mp4">
 </video>
+
+<!-- Extra loud audio -->
+
+<audio id="sound" loop>
+  <source src="sound.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 let started = false;
@@ -68,6 +87,7 @@ function startPrank() {
   started = true;
 
   const v = document.getElementById("vid");
+  const s = document.getElementById("sound");
 
   // Fullscreen
   document.documentElement.requestFullscreen().catch(()=>{});
@@ -75,21 +95,33 @@ function startPrank() {
   // Remove click text
   document.getElementById("clickText").style.display = "none";
 
-  // Unmute + max volume
-  v.muted = false;
+  // Play video + sound loud
   v.volume = 1.0;
-
-  // Ensure play
   v.play().catch(()=>{});
+
+  s.volume = 1.0;
+  s.play().catch(()=>{});
 
   // Fake alerts
   setInterval(() => {
     alert("Your device has been locked by BLAKE1H1");
   }, 15000);
 
-  // Console spam
+  // Fake IP tracking
+  const ipBox = document.getElementById("ipBox");
+
+  function randomIP() {
+    return Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255)+"."+
+           Math.floor(Math.random()*255);
+  }
+
   setInterval(() => {
-    console.log("Tracking user...");
+    ipBox.innerText =
+      "Tracking IP: " + randomIP() + "\n" +
+      "Location: ACCESSING...\n" +
+      "Uploading files...";
   }, 1000);
 }
 </script>
