@@ -12,26 +12,28 @@
       font-family: Arial, sans-serif;
     }
 
-    #overlay {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 35px;
-      font-weight: bold;
-      animation: blink 1s infinite;
-      z-index: 2;
-    }
+ #overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5em; 
+    color: #8727F5;
+    text-shadow: 1px 1px 2px white, 1px 1px 2px white; 
+    z-index: 2;
+  }
 
-    #ipBox {
-      position: absolute;
-      top: 50%;
-      left: 5px; /* Move to middle-left */
-      transform: translateY(-50%);
-      color: lime;
-      font-size: 18px;
-      z-index: 2;
-      font-family: monospace;
-    }
+  #ipBox {
+    position: absolute;
+    bottom: 80px;
+    left: 5px; 
+    transform: translate(-50%, -50%);
+    font-size: 4em; 
+    color: red;
+    text-shadow: 1px 1px 2px white, 1px 1px 2px white; 
+    z-index: 2;
+    padding: 10px; 
+  }
 	
     #clickText {
       position: absolute;
