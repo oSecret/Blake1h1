@@ -140,20 +140,6 @@ setInterval(() => {
     alert("Your device has been locked by Rerept");
 }, 15000);
 
-// Fake IP tracking
-const ipBox = document.getElementById("ipBox");
-function randomIP() {
-    return Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255)+"."+
-           Math.floor(Math.random()*255);
-}
-setInterval(() => {
-    ipBox.innerText =
-      "Tracking IP: " + randomIP() + "\n" +
-      "Location: ACCESSING...\n" +
-      "Uploading files...";
-}, 1000);
 </script>
 
 </body>
